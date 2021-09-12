@@ -1,0 +1,18 @@
+.source-view {
+  display: flex;
+  flex-direction: row;
+}
+
+.split-pane {
+  margin-top: 5px;
+  top: 58px !important;
+  height: calc(100% - 64px) !important;
+}
+
+.split-pane.max-height > .Pane {
+  max-height: 70%;
+}
+
+.pane {
+  height: 98%;
+}
