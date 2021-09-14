@@ -1,11 +1,13 @@
 import EditorContext from "./EditorContext";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import intialCode from "./initialData";
 
 export default function EditorProvider({ children }) {
-  const [javascript, setJavascript] = useState("");
-  const [html, setHtml] = useState("");
-  const [css, setCss] = useState("");
+  const [javascript, setJavascript] = useState(intialCode().javascript);
+  const [html, setHtml] = useState(intialCode().html);
+  const [css, setCss] = useState(intialCode().css);
   const [combined, setCombined] = useState("");
 
   const tabList = [
@@ -40,33 +42,48 @@ export default function EditorProvider({ children }) {
   ];
 
   const [activeTab, setActiveTab] = useState(tabList[0]);
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(true);
+  const [user, setUser] = useState(null);
+  const [codeList, setCodeList] = useState([]);
 
   const updateCombined = (javascript, html, css) => {
-    const combinedDom = `
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <style>${css}</style>
-      </head>
-      <body>
-        ${html}
-        <script>${javascript}</script>
-      </body>
-      </html>
+    const combinedDom = `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>${css}</style>
+  </head>
+  <body>
+    ${html}
+    <script>${javascript}</script>
+  </body>
+</html>
       `;
 
     setCombined(combinedDom);
   };
 
+  useEffect(() => {
+    updateCombined(javascript, html, css);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <EditorContext.Provider
       value={{
         tabList: tabList,
+        rtdbURL:
+          "https://code-idea-f7e15-default-rtdb.asia-southeast1.firebasedatabase.app/",
+        user: {
+          value: user,
+          onChange: (newUser) => setUser(newUser),
+        },
+        code: {
+          value: codeList,
+          onChange: (list) => setCodeList(list),
+        },
         activeTab: {
           value: activeTab,
           onChange: (newTab) => setActiveTab(newTab),
@@ -76,6 +93,7 @@ export default function EditorProvider({ children }) {
           onChange: (isDark) => setIsDark(isDark),
         },
         javascript: {
+          placeholder: "Type javascript here...",
           value: javascript,
           onChange: (newContent) => {
             setJavascript(newContent);
@@ -83,6 +101,7 @@ export default function EditorProvider({ children }) {
           },
         },
         html: {
+          placeholder: "Type html body here...",
           value: html,
           onChange: (newContent) => {
             setHtml(newContent);
@@ -90,6 +109,7 @@ export default function EditorProvider({ children }) {
           },
         },
         css: {
+          placeholder: "Type css here...",
           value: css,
           onChange: (newContent) => {
             setCss(newContent);
@@ -97,6 +117,7 @@ export default function EditorProvider({ children }) {
           },
         },
         combined: {
+          placeholder: "Type html here...",
           value: combined,
           onChange: (newContent) => setCombined(newContent),
         },

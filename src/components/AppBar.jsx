@@ -1,13 +1,18 @@
-import React, { useState } from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Fab from "@material-ui/core/Fab";
-import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
+import React from "react"; // , { useContext, useEffect, useState }
+import {
+  AppBar,
+  // Drawer,
+  // Fab,
+  // IconButton,
+  // InputBase,
+  // Paper,
+  Toolbar,
+  Typography,
+} from "@material-ui/core";
 import { alpha, makeStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import IconButton from "@material-ui/core/IconButton";
-import Paper from "@material-ui/core/Paper";
+// import EditorContext from "../context/EditorContext";
+
+// import http from "../services/httpService";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-    display: "none",
+    // display: "none",
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
@@ -74,17 +79,43 @@ const useStyles = makeStyles((theme) => ({
 export default function SearchAppBar() {
   const classes = useStyles();
 
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
-  const toggleDrawer = () => {
-    setIsOpen((isOpen) => !isOpen);
-  };
+  // const toggleDrawer = () => {
+  //   setIsOpen((isOpen) => !isOpen);
+  // };
+
+  // const context = useContext(EditorContext);
+
+  // const setCodeList = (codeList) => {
+  //   context.code.onChange(codeList);
+  //   context.javascript.onChange((codeList[0] || {}).js || "");
+  //   context.html.onChange((codeList[0] || {}).html || "");
+  //   context.css.onChange((codeList[0] || {}).css || "");
+  // };
+
+  // const getCodeList = async () => {
+  //   const codeList = await http.get(context.rtdbURL + "code.json", {
+  //     params: {
+  //       orderBy: '"$key"',
+  //       startAt: '"0"',
+  //       endAt: '"10"',
+  //     },
+  //   });
+
+  //   const data = codeList.data;
+  //   setCodeList(Object.values(data));
+  // };
+
+  // useEffect(() => {
+  //   getCodeList();
+  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar>
-          <Fab
+          {/* <Fab
             color="primary"
             className={classes.menuButton}
             size="small"
@@ -92,11 +123,11 @@ export default function SearchAppBar() {
             style={{ zIndex: 100, marginRight: "8px" }}
           >
             <span className="material-icons">list</span>
-          </Fab>
+          </Fab> */}
           <Typography className={classes.title} variant="h6" noWrap>
-            <span className={classes.titleIcon}>{"</>"}</span>Code Idea
+            <span className={classes.titleIcon}>{"</>"}</span>Code Editor
           </Typography>
-          <div className={classes.search}>
+          {/* <div className={classes.search}>
             <div className={classes.searchIcon}>
               <span className="material-icons">search</span>
             </div>
@@ -108,11 +139,11 @@ export default function SearchAppBar() {
               }}
               inputProps={{ "aria-label": "search" }}
             />
-          </div>
+          </div> */}
         </Toolbar>
       </AppBar>
 
-      <Drawer
+      {/* <Drawer
         variant="persistent"
         anchor="left"
         open={isOpen}
@@ -124,11 +155,13 @@ export default function SearchAppBar() {
               <span className="material-icons">list</span>List
             </h2>
           </Paper>
-          <IconButton color="primary" size="medium" onClick={toggleDrawer}>
+          <IconButton color="primary" size="small" onClick={toggleDrawer}>
             <span className="material-icons">arrow_back_ios_new</span>
           </IconButton>
         </div>
-      </Drawer>
+
+        <h1>{context.code.value.length}</h1>
+      </Drawer> */}
     </div>
   );
 }

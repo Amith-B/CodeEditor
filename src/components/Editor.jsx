@@ -5,7 +5,7 @@ import "brace/mode/javascript";
 import "brace/mode/css";
 import "brace/mode/html";
 import "brace/theme/tomorrow";
-import "brace/theme/solarized_dark";
+import "brace/theme/twilight";
 
 import { debounce } from "lodash";
 import { useCallback } from "react";
@@ -14,7 +14,7 @@ const update = debounce((value, onChangeCallback) => {
   onChangeCallback(value);
 }, 2000);
 
-function Editor({ isDark, mode, value, onChange }) {
+function Editor({ isDark, mode, value, onChange, placeholder }) {
   const debouceRequest = useCallback(
     (value) => update(value, onChange),
     [onChange]
@@ -23,8 +23,9 @@ function Editor({ isDark, mode, value, onChange }) {
   return (
     <>
       <AceEditor
+        placeholder={placeholder}
         mode={mode}
-        theme={isDark ? "solarized_dark" : "tomorrow"}
+        theme={isDark ? "twilight" : "tomorrow"}
         wrapEnabled={true}
         width={"100%"}
         name="editor"
