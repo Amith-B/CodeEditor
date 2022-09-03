@@ -1,23 +1,10 @@
 import "./Source.css";
 
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  useContext,
-  // useState
-} from "react";
-import {
-  Button,
-  ButtonGroup,
-  // Dialog,
-  // DialogActions,
-  // DialogContent,
-  // DialogTitle,
-  IconButton,
-  Paper,
-} from "@material-ui/core";
+import { useContext } from "react";
+import { Button, ButtonGroup, IconButton, Paper } from "@material-ui/core";
 
 import Editor from "./Editor";
-// import LogInForm from "./Login";
 
 import EditorContext from "../context/EditorContext";
 
@@ -32,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Source() {
   const classes = useStyles();
-  // const [isDialogOpen, setIsDialogOpen] = useState(false);
   const context = useContext(EditorContext);
 
   const getEditor = (context) => {
@@ -40,6 +26,7 @@ function Source() {
 
     return (
       <Editor
+        key={tab.id}
         placeholder={context[tab.id].placeholder}
         isDark={context.isDark.value}
         mode={tab.editorMode}
@@ -64,14 +51,6 @@ function Source() {
 
     return `button ${isActiveId}-button-background`;
   };
-
-  // const toggleDialog = () => {
-  //   setIsDialogOpen((isOpen) => !isOpen);
-  // };
-
-  // async function handleLogIn(email, password) {
-  //   // await logIn(email, password);
-  // }
 
   return (
     <>
@@ -119,17 +98,6 @@ function Source() {
           </ButtonGroup>
 
           <ButtonGroup>
-            {/* <IconButton
-              aria-label="theme"
-              size="small"
-              style={{
-                color: isDark(context) ? "white" : "black",
-              }}
-              onClick={toggleDialog}
-            >
-              <span className="material-icons">save</span>
-            </IconButton> */}
-
             <IconButton
               aria-label="theme"
               size="small"
@@ -149,28 +117,6 @@ function Source() {
           {getEditor(context)}
         </div>
       </Paper>
-
-      {/* <Dialog
-        onClose={toggleDialog}
-        aria-labelledby="customized-dialog-title"
-        open={isDialogOpen}
-      >
-        <DialogTitle id="customized-dialog-title" onClose={toggleDialog}>
-          Only Admin can save the code
-        </DialogTitle>
-        <DialogContent dividers>
-          {context.user.value ? (
-            <h1>Already Logged in</h1>
-          ) : (
-            <LogInForm handleLogIn={handleLogIn} />
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={toggleDialog} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog> */}
     </>
   );
 }
